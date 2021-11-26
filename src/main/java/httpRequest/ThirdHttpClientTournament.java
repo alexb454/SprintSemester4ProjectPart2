@@ -1,5 +1,7 @@
 package httpRequest;
+
 import com.fasterxml.jackson.databind.ObjectMapper;
+
 import java.io.IOException;
 import java.net.URI;
 import java.net.http.HttpClient;
@@ -7,13 +9,14 @@ import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.concurrent.ExecutionException;
 import java.util.Scanner;
+import java.util.concurrent.ExecutionException;
 
-public class MainHttpClientMembership {
+public class ThirdHttpClientTournament {
     private static Scanner scanner;
     private static int input;
     private static int input2;
+    private static int put;
     private static int deleted;
     public static void main(String[] args) throws InterruptedException, ExecutionException, IOException {
         while (true) {
@@ -43,27 +46,27 @@ public class MainHttpClientMembership {
     }
     public static void httpPostMembership() throws IOException, InterruptedException {
         Map<Object, Object> people = new HashMap<>();
-        people.put("personId", 3);
-        people.put("startDate", "12/12/2000");
-        people.put("duration", "12/12/2008");
-        people.put("type", "normal");
-        people.put("currentId", "1");
-        people.put("pastId", "5");
-        people.put("upcomingId", "4");
+        people.put("start", "12/12/1990");
+        people.put("end", "13/12/1990");
+        people.put("location", "Mario golf");
+        people.put("fee", 10.0);
+        people.put("prize", 55.0);
+        people.put("members", "Mario, Luigi, Peach");
+        people.put("standings", "1.Peach, 2.Mario, 3.Luigi");
 
         ObjectMapper posted = new ObjectMapper();
         String requestBody = posted.writeValueAsString(people);
 
         HttpClient client = HttpClient.newHttpClient();
         HttpRequest request = HttpRequest.newBuilder()
-                .uri(URI.create("http://localhost:8080/membership"))
+                .uri(URI.create("http://localhost:8080/tournament"))
                 .header("Content-Type", "application/json")
                 .POST(HttpRequest.BodyPublishers.ofString(requestBody))
                 .build();
         try {
             HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
             if (response.statusCode() == 201) {
-                System.out.println("Posted Membership : " + response.body());
+                System.out.println("Posted Tournament : " + response.body());
             }
         } catch (IOException | InterruptedException e) {
             e.printStackTrace();
@@ -77,14 +80,14 @@ public class MainHttpClientMembership {
 
         HttpClient client = HttpClient.newHttpClient();
         HttpRequest request = HttpRequest.newBuilder()
-                .uri(URI.create("http://localhost:8080/membership/" + input2))
+                .uri(URI.create("http://localhost:8080/tournament/" + input2))
                 .header("Content-Type", "application/json")
                 .GET()
                 .build();
         try {
             HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
             if (response.statusCode() == 200) {
-                System.out.println("The Membership you requested : " + response.body());
+                System.out.println("The tournament you requested : " + response.body());
             }
 
         } catch (IOException | InterruptedException e) {
@@ -94,18 +97,16 @@ public class MainHttpClientMembership {
     }
 
     public static void httpPutMembership() throws IOException, InterruptedException {
+        System.out.println("Type Id of the tournament to update: ");
+        put = scanner.nextInt();
         Map<Object, Object> people = new HashMap<>();
-        people.put("firstName", "Joe");
-        people.put("lastName", "Phelan");
-        people.put("address", "House");
-        people.put("email", "joep@hotmail.com");
-        people.put("phoneNumber", 5555556);
-        people.put("startDate", "12/12/2004");
-        people.put("duration", "12/12/2016");
-        people.put("type", "trial");
-        people.put("currentId", "5");
-        people.put("pastId", "2");
-        people.put("upcomingId", "3");
+        people.put("start", "12/12/2000");
+        people.put("end", "12/12/2001");
+        people.put("location", "Mario golf 2");
+        people.put("fee", 18.0);
+        people.put("prize", 95.0);
+        people.put("members", "Mario, Luigi, Peach, Yoshi");
+        people.put("standings", "1.Peach, 2.Yoshi, 3.Luigi, 4.Mario");
 
         ObjectMapper posted = new ObjectMapper();
         String requestBody = posted
@@ -113,14 +114,14 @@ public class MainHttpClientMembership {
 
         HttpClient client = HttpClient.newHttpClient();
         HttpRequest request = HttpRequest.newBuilder()
-                .uri(URI.create("http://localhost:8080/membership"))
+                .uri(URI.create("http://localhost:8080/tournament/" + put))
                 .header("Content-Type", "application/json")
                 .PUT(HttpRequest.BodyPublishers.ofString(requestBody))
                 .build();
         try {
             HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
             if (response.statusCode() == 202) {
-                System.out.println("Updated Membership : " + response.body());
+                System.out.println("Updated Tournament : " + response.body());
             }
         } catch (IOException | InterruptedException e) {
             e.printStackTrace();
@@ -129,10 +130,10 @@ public class MainHttpClientMembership {
 
     public static void httpDeleteMembership() throws IOException, InterruptedException {
         Scanner scanner = new Scanner(System.in);
-        System.out.println("Type Id of the membership to delete: ");
+        System.out.println("Type Id of the tournament to delete: ");
         deleted = scanner.nextInt();
         HttpRequest request = HttpRequest.newBuilder()
-                .uri(URI.create("http://localhost:8080/membership/" + deleted))
+                .uri(URI.create("http://localhost:8080/tournament/" + deleted))
                 .header("Content-Type", "application/json")
                 .DELETE()
                 .build();
@@ -140,7 +141,7 @@ public class MainHttpClientMembership {
         try {
             HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
             if (response.statusCode() == 204) {
-                System.out.println("Deleted Membership of " + deleted + " successful");
+                System.out.println("Deleted Tournament of id " + deleted + " successful");
             }
         } catch (IOException | InterruptedException e) {
             e.printStackTrace();

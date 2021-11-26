@@ -1,5 +1,7 @@
 package httpRequest;
+
 import com.fasterxml.jackson.databind.ObjectMapper;
+
 import java.io.IOException;
 import java.net.URI;
 import java.net.http.HttpClient;
@@ -7,13 +9,14 @@ import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.concurrent.ExecutionException;
 import java.util.Scanner;
+import java.util.concurrent.ExecutionException;
 
-public class MainHttpClientMembership {
+public class SecondHttpClientPerson {
     private static Scanner scanner;
     private static int input;
     private static int input2;
+    private static int put;
     private static int deleted;
     public static void main(String[] args) throws InterruptedException, ExecutionException, IOException {
         while (true) {
@@ -43,27 +46,25 @@ public class MainHttpClientMembership {
     }
     public static void httpPostMembership() throws IOException, InterruptedException {
         Map<Object, Object> people = new HashMap<>();
-        people.put("personId", 3);
-        people.put("startDate", "12/12/2000");
-        people.put("duration", "12/12/2008");
-        people.put("type", "normal");
-        people.put("currentId", "1");
-        people.put("pastId", "5");
-        people.put("upcomingId", "4");
+        people.put("firstName", "Alex");
+        people.put("lastName", "Bristow");
+        people.put("address", "House");
+        people.put("email", "alexb@hotmail.com");
+        people.put("phoneNumber", 5555555);
 
         ObjectMapper posted = new ObjectMapper();
         String requestBody = posted.writeValueAsString(people);
 
         HttpClient client = HttpClient.newHttpClient();
         HttpRequest request = HttpRequest.newBuilder()
-                .uri(URI.create("http://localhost:8080/membership"))
+                .uri(URI.create("http://localhost:8080/people"))
                 .header("Content-Type", "application/json")
                 .POST(HttpRequest.BodyPublishers.ofString(requestBody))
                 .build();
         try {
             HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
             if (response.statusCode() == 201) {
-                System.out.println("Posted Membership : " + response.body());
+                System.out.println("Posted Person : " + response.body());
             }
         } catch (IOException | InterruptedException e) {
             e.printStackTrace();
@@ -77,14 +78,14 @@ public class MainHttpClientMembership {
 
         HttpClient client = HttpClient.newHttpClient();
         HttpRequest request = HttpRequest.newBuilder()
-                .uri(URI.create("http://localhost:8080/membership/" + input2))
+                .uri(URI.create("http://localhost:8080/people/" + input2))
                 .header("Content-Type", "application/json")
                 .GET()
                 .build();
         try {
             HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
             if (response.statusCode() == 200) {
-                System.out.println("The Membership you requested : " + response.body());
+                System.out.println("The person you requested : " + response.body());
             }
 
         } catch (IOException | InterruptedException e) {
@@ -94,18 +95,14 @@ public class MainHttpClientMembership {
     }
 
     public static void httpPutMembership() throws IOException, InterruptedException {
+        System.out.println("Type Id of the person to update: ");
+        put = scanner.nextInt();
         Map<Object, Object> people = new HashMap<>();
         people.put("firstName", "Joe");
         people.put("lastName", "Phelan");
         people.put("address", "House");
         people.put("email", "joep@hotmail.com");
         people.put("phoneNumber", 5555556);
-        people.put("startDate", "12/12/2004");
-        people.put("duration", "12/12/2016");
-        people.put("type", "trial");
-        people.put("currentId", "5");
-        people.put("pastId", "2");
-        people.put("upcomingId", "3");
 
         ObjectMapper posted = new ObjectMapper();
         String requestBody = posted
@@ -113,14 +110,14 @@ public class MainHttpClientMembership {
 
         HttpClient client = HttpClient.newHttpClient();
         HttpRequest request = HttpRequest.newBuilder()
-                .uri(URI.create("http://localhost:8080/membership"))
+                .uri(URI.create("http://localhost:8080/people/" + put))
                 .header("Content-Type", "application/json")
                 .PUT(HttpRequest.BodyPublishers.ofString(requestBody))
                 .build();
         try {
             HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
             if (response.statusCode() == 202) {
-                System.out.println("Updated Membership : " + response.body());
+                System.out.println("Updated person : " + response.body());
             }
         } catch (IOException | InterruptedException e) {
             e.printStackTrace();
@@ -129,10 +126,10 @@ public class MainHttpClientMembership {
 
     public static void httpDeleteMembership() throws IOException, InterruptedException {
         Scanner scanner = new Scanner(System.in);
-        System.out.println("Type Id of the membership to delete: ");
+        System.out.println("Type Id of the person to delete: ");
         deleted = scanner.nextInt();
         HttpRequest request = HttpRequest.newBuilder()
-                .uri(URI.create("http://localhost:8080/membership/" + deleted))
+                .uri(URI.create("http://localhost:8080/people/" + deleted))
                 .header("Content-Type", "application/json")
                 .DELETE()
                 .build();
@@ -140,7 +137,7 @@ public class MainHttpClientMembership {
         try {
             HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
             if (response.statusCode() == 204) {
-                System.out.println("Deleted Membership of " + deleted + " successful");
+                System.out.println("Deleted Person of id " + deleted + " successful");
             }
         } catch (IOException | InterruptedException e) {
             e.printStackTrace();
