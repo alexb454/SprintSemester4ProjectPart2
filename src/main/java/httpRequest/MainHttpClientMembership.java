@@ -10,9 +10,11 @@ import java.util.Map;
 import java.util.concurrent.ExecutionException;
 import java.util.Scanner;
 
-public class MainHttpClientPerson {
+public class MainHttpClientMembership {
     private static Scanner scanner;
     private static int input;
+    private static int input2;
+    private static int deleted;
     public static void main(String[] args) throws InterruptedException, ExecutionException, IOException {
         while (true) {
             System.out.println("Welcome!, to add press 1, to get press 2, to update press 3, " +
@@ -59,7 +61,8 @@ public class MainHttpClientPerson {
 
         HttpClient client = HttpClient.newHttpClient();
         HttpRequest request = HttpRequest.newBuilder()
-                .uri(URI.create("http://localhost:8080/people"))
+                .uri(URI.create("http://localhost:8080/membership"))
+                .header("Content-Type", "application/json")
                 .POST(HttpRequest.BodyPublishers.ofString(requestBody))
                 .build();
         try {
@@ -74,19 +77,19 @@ public class MainHttpClientPerson {
 
     public static void httpGetMembership() throws IOException, InterruptedException {
         Scanner scanner = new Scanner(System.in);
-        String peoples;
         System.out.println("Please enter the id number: ");
-        peoples = scanner.next();
+        input2 = scanner.nextInt();
 
         HttpClient client = HttpClient.newHttpClient();
         HttpRequest request = HttpRequest.newBuilder()
-                .uri(URI.create("http://localhost:8080/membership"))
+                .uri(URI.create("http://localhost:8080/membership/" + input2))
+                .header("Content-Type", "application/json")
                 .GET()
                 .build();
         try {
             HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
             if (response.statusCode() == 200) {
-                System.out.println(response.body());
+                System.out.println("The Membership you requested : " + response.body());
             }
 
         } catch (IOException | InterruptedException e) {
@@ -116,6 +119,7 @@ public class MainHttpClientPerson {
         HttpClient client = HttpClient.newHttpClient();
         HttpRequest request = HttpRequest.newBuilder()
                 .uri(URI.create("http://localhost:8080/membership"))
+                .header("Content-Type", "application/json")
                 .PUT(HttpRequest.BodyPublishers.ofString(requestBody))
                 .build();
         try {
@@ -128,22 +132,21 @@ public class MainHttpClientPerson {
         }
     }
 
-
-
     public static void httpDeleteMembership() throws IOException, InterruptedException {
         Scanner scanner = new Scanner(System.in);
-        String deleted;
         System.out.println("Type Id of the membership to delete: ");
-        deleted = scanner.next();
+        deleted = scanner.nextInt();
         HttpRequest request = HttpRequest.newBuilder()
-                .uri(URI.create("http://localhost:8080/membership/search/"))
+                .uri(URI.create("http://localhost:8080/membership/" + deleted))
+                .header("Content-Type", "application/json")
                 .DELETE()
                 .build();
         HttpClient client = HttpClient.newHttpClient();
         try {
             HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
             if (response.statusCode() == 200) {
-                System.out.println("Deleted Membership : " + response.body());
+                System.out.println("Deleted Membership of " + deleted + " successful");
+                System.out.println(response.body());
             }
         } catch (IOException | InterruptedException e) {
             e.printStackTrace();
