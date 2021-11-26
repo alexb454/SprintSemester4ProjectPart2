@@ -64,7 +64,7 @@ public class SecondHttpClientPerson {
         try {
             HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
             if (response.statusCode() == 201) {
-                System.out.println("Posted Person : " + response.body());
+                System.out.println("Posted Person");
             }
         } catch (IOException | InterruptedException e) {
             e.printStackTrace();
