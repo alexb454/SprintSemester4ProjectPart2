@@ -30,21 +30,21 @@ public class ThirdHttpClientTournament {
                     System.out.println("Goodbye!");
                     System.exit(0);
                 case 1:
-                    httpPostMembership();
+                    httpPostTournament();
                     break;
                 case 2:
-                    httpGetMembership();
+                    httpGetTournament();
                     break;
                 case 3:
-                    httpPutMembership();
+                    httpPutTournament();
                     break;
                 case 4:
-                    httpDeleteMembership();
+                    httpDeleteTournament();
                     break;
             }
         }
     }
-    public static void httpPostMembership() throws IOException, InterruptedException {
+    public static void httpPostTournament() throws IOException, InterruptedException {
         Map<Object, Object> people = new HashMap<>();
         people.put("start", "12/12/1990");
         people.put("end", "13/12/1990");
@@ -73,7 +73,7 @@ public class ThirdHttpClientTournament {
         }
     }
 
-    public static void httpGetMembership() throws IOException, InterruptedException {
+    public static void httpGetTournament() throws IOException, InterruptedException {
         Scanner scanner = new Scanner(System.in);
         System.out.println("Please enter the id number: ");
         input2 = scanner.nextInt();
@@ -96,7 +96,7 @@ public class ThirdHttpClientTournament {
 
     }
 
-    public static void httpPutMembership() throws IOException, InterruptedException {
+    public static void httpPutTournament() throws IOException, InterruptedException {
         System.out.println("Type Id of the tournament to update: ");
         put = scanner.nextInt();
         Map<Object, Object> people = new HashMap<>();
@@ -128,7 +128,7 @@ public class ThirdHttpClientTournament {
         }
     }
 
-    public static void httpDeleteMembership() throws IOException, InterruptedException {
+    public static void httpDeleteTournament() throws IOException, InterruptedException {
         Scanner scanner = new Scanner(System.in);
         System.out.println("Type Id of the tournament to delete: ");
         deleted = scanner.nextInt();

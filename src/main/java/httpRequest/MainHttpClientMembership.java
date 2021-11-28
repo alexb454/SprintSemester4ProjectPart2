@@ -46,10 +46,10 @@ public class MainHttpClientMembership {
         people.put("personId", 3);
         people.put("startDate", "12/12/2000");
         people.put("duration", "12/12/2008");
-        people.put("type", "normal");
-        people.put("currentId", "1");
-        people.put("pastId", "5");
-        people.put("upcomingId", "4");
+        people.put("membershipTypeId", 1);
+        people.put("currentTournamentId", 1);
+        people.put("pastTournamentId", 2);
+        people.put("upcomingTournamentId", 3);
 
         ObjectMapper posted = new ObjectMapper();
         String requestBody = posted.writeValueAsString(people);
@@ -95,17 +95,13 @@ public class MainHttpClientMembership {
 
     public static void httpPutMembership() throws IOException, InterruptedException {
         Map<Object, Object> people = new HashMap<>();
-        people.put("firstName", "Joe");
-        people.put("lastName", "Phelan");
-        people.put("address", "House");
-        people.put("email", "joep@hotmail.com");
-        people.put("phoneNumber", 5555556);
+        people.put("personId", 6);
         people.put("startDate", "12/12/2004");
         people.put("duration", "12/12/2016");
-        people.put("type", "trial");
-        people.put("currentId", "5");
-        people.put("pastId", "2");
-        people.put("upcomingId", "3");
+        people.put("membershipTypeId", 1);
+        people.put("currentTournamentId", 2);
+        people.put("pastTournamentId", 5);
+        people.put("upcomingTournamentId", 3);
 
         ObjectMapper posted = new ObjectMapper();
         String requestBody = posted

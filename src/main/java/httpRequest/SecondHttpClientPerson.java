@@ -30,21 +30,21 @@ public class SecondHttpClientPerson {
                     System.out.println("Goodbye!");
                     System.exit(0);
                 case 1:
-                    httpPostMembership();
+                    httpPostPerson();
                     break;
                 case 2:
-                    httpGetMembership();
+                    httpGetPerson();
                     break;
                 case 3:
-                    httpPutMembership();
+                    httpPutPerson();
                     break;
                 case 4:
-                    httpDeleteMembership();
+                    httpDeletePerson();
                     break;
             }
         }
     }
-    public static void httpPostMembership() throws IOException, InterruptedException {
+    public static void httpPostPerson() throws IOException, InterruptedException {
         Map<Object, Object> people = new HashMap<>();
         people.put("firstName", "Alex");
         people.put("lastName", "Bristow");
@@ -71,7 +71,7 @@ public class SecondHttpClientPerson {
         }
     }
 
-    public static void httpGetMembership() throws IOException, InterruptedException {
+    public static void httpGetPerson() throws IOException, InterruptedException {
         Scanner scanner = new Scanner(System.in);
         System.out.println("Please enter the id number: ");
         input2 = scanner.nextInt();
@@ -94,7 +94,7 @@ public class SecondHttpClientPerson {
 
     }
 
-    public static void httpPutMembership() throws IOException, InterruptedException {
+    public static void httpPutPerson() throws IOException, InterruptedException {
         System.out.println("Type Id of the person to update: ");
         put = scanner.nextInt();
         Map<Object, Object> people = new HashMap<>();
@@ -124,7 +124,7 @@ public class SecondHttpClientPerson {
         }
     }
 
-    public static void httpDeleteMembership() throws IOException, InterruptedException {
+    public static void httpDeletePerson() throws IOException, InterruptedException {
         Scanner scanner = new Scanner(System.in);
         System.out.println("Type Id of the person to delete: ");
         deleted = scanner.nextInt();
