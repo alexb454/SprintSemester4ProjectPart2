@@ -15,7 +15,7 @@ import java.util.concurrent.ExecutionException;
 public class ThirdHttpClientTournament {
     private static Scanner scanner;
     private static int input;
-    private static int input2;
+    private static int get;
     private static int put;
     private static int deleted;
     public static void main(String[] args) throws InterruptedException, ExecutionException, IOException {
@@ -76,11 +76,11 @@ public class ThirdHttpClientTournament {
     public static void httpGetTournament() throws IOException, InterruptedException {
         Scanner scanner = new Scanner(System.in);
         System.out.println("Please enter the id number: ");
-        input2 = scanner.nextInt();
+        get = scanner.nextInt();
 
         HttpClient client = HttpClient.newHttpClient();
         HttpRequest request = HttpRequest.newBuilder()
-                .uri(URI.create("http://localhost:8080/tournament/" + input2))
+                .uri(URI.create("http://localhost:8080/tournament/" + get))
                 .header("Content-Type", "application/json")
                 .GET()
                 .build();

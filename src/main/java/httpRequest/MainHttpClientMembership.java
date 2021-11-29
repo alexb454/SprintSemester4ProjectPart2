@@ -13,7 +13,7 @@ import java.util.Scanner;
 public class MainHttpClientMembership {
     private static Scanner scanner;
     private static int input;
-    private static int input2;
+    private static int get;
     private static int deleted;
     private static int put;
     public static void main(String[] args) throws InterruptedException, ExecutionException, IOException {
@@ -74,11 +74,11 @@ public class MainHttpClientMembership {
     public static void httpGetMembership() throws IOException, InterruptedException {
         Scanner scanner = new Scanner(System.in);
         System.out.println("Please enter the id number: ");
-        input2 = scanner.nextInt();
+        get = scanner.nextInt();
 
         HttpClient client = HttpClient.newHttpClient();
         HttpRequest request = HttpRequest.newBuilder()
-                .uri(URI.create("http://localhost:8080/membership/" + input2))
+                .uri(URI.create("http://localhost:8080/membership/" + get))
                 .header("Content-Type", "application/json")
                 .GET()
                 .build();
