@@ -15,6 +15,7 @@ public class MainHttpClientMembership {
     private static int input;
     private static int input2;
     private static int deleted;
+    private static int put;
     public static void main(String[] args) throws InterruptedException, ExecutionException, IOException {
         while (true) {
             System.out.println("Welcome!, to add press 1, to get press 2, to update press 3, " +
@@ -94,6 +95,8 @@ public class MainHttpClientMembership {
     }
 
     public static void httpPutMembership() throws IOException, InterruptedException {
+        System.out.println("Type Id of the person to update: ");
+        put = scanner.nextInt();
         Map<Object, Object> people = new HashMap<>();
         people.put("personId", 6);
         people.put("startDate", "12/12/2004");
@@ -109,7 +112,7 @@ public class MainHttpClientMembership {
 
         HttpClient client = HttpClient.newHttpClient();
         HttpRequest request = HttpRequest.newBuilder()
-                .uri(URI.create("http://localhost:8080/membership"))
+                .uri(URI.create("http://localhost:8080/membership/" + put))
                 .header("Content-Type", "application/json")
                 .PUT(HttpRequest.BodyPublishers.ofString(requestBody))
                 .build();
