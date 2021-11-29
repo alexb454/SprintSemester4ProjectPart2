@@ -1,5 +1,6 @@
-//package HttpClientTest;
-//
+package HttpClientTest;
+//ran out of time to do a proper test of the client,
+//was unsure where to go with the test and couldn't get pass this
 //
 //import org.junit.jupiter.api.Test;
 //
@@ -14,7 +15,7 @@
 //public class HttpClientTest {
 //    @Test
 //    public void TestPeople() {
-//        public static void main (String [] args){
+//        //public static void main (String [] args){
 //            HttpClient client = HttpClient.newHttpClient();
 //            HttpRequest request = HttpRequest.newBuilder().uri(URI.create("http://localhost:8080/people")).build();
 //            try {
